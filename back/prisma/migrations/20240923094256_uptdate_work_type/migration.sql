@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "WorkType" ALTER COLUMN "weeklyHour" SET DEFAULT '0',
+ALTER COLUMN "friday" SET DEFAULT '0',
+ALTER COLUMN "monday" SET DEFAULT '0',
+ALTER COLUMN "thursday" SET DEFAULT '0',
+ALTER COLUMN "tuesday" SET DEFAULT '0',
+ALTER COLUMN "wednesday" SET DEFAULT '0';

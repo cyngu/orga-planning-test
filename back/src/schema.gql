@@ -1,0 +1,222 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Role {
+  roleId: ID!
+  roleName: String!
+  UserRoles: [UserRole!]!
+}
+
+type UserRole {
+  userId: ID!
+  roleId: ID!
+  user: User!
+  role: Role!
+}
+
+type Event {
+  id: String!
+  titleAm: String!
+  titlePm: String!
+  parking: Boolean!
+  hourlyAm: String!
+  hourlyPm: String!
+  workTime: String!
+  start: DateTime!
+  end: DateTime!
+  userId: [User!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  trigramme: String!
+  active: Boolean!
+  workTypeId: String
+  UserRoles: [UserRole!]!
+  EventCalendar: [Event!]!
+}
+
+type UserWithEventType {
+  firstName: String!
+  lastName: String!
+  id: String!
+  workTypeId: String!
+  EventCalendar: [Event!]!
+}
+
+type UserCustom {
+  id: String!
+  firstName: String!
+  lastName: String!
+  trigramme: String!
+  active: Boolean!
+  workTypeId: String
+}
+
+type ReportPresenceType {
+  userId: String!
+  userName: String!
+  workTypeName: String!
+  remoteWorkDays: Float!
+  onsiteWorkDays: Float!
+  onsiteWorkPercentage: Float!
+  parkingUsagePercentage: Float!
+  totalWorkDays: Float!
+  totalDays: Float!
+  workDaysPercentage: Float!
+  noApplyEvent: Float!
+  businessDays: Float!
+}
+
+type AdminConfiguration {
+  id: String!
+  name: String!
+  value: String!
+  description: String!
+}
+
+type WorkType {
+  id: String!
+  name: String!
+  monday: String!
+  tuesday: String!
+  wednesday: String!
+  thursday: String!
+  friday: String!
+  weeklyHour: String!
+}
+
+type Query {
+  getAllUsers: [UserCustom!]!
+  userExists(email: String!, password: String!): String!
+  getAllUsersWithEvent(getAllUsersWithEventInput: GetAllUsersWithEventInput!): [UserWithEventType!]!
+  getRolesByUserId(userId: String!): [Role!]!
+  getAllRoles: [Role!]!
+  events: [Event!]!
+  eventsByUserId(userId: String!): [Event!]!
+  eventsByUserIdAndDate(userId: String!, date: String!): [Event!]!
+  getParkingPlacesGettedCount(date: DateTime!): Float!
+  getReportPresence(reportInput: ReportInput!): [ReportPresenceType!]!
+  getConfigurationParkingPlace: AdminConfiguration!
+  getConfigurationParams(paramsName: String!): AdminConfiguration!
+  getAllWorkType: [WorkType!]!
+  getWorkTypeById(id: String!): WorkType!
+  getWorkTypeByUserId(id: String!): WorkType!
+}
+
+input GetAllUsersWithEventInput {
+  dateList: [DateTime!]!
+}
+
+input ReportInput {
+  userId: [String!]!
+  datesString: [String!]!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUserRole(userId: String!, roleIdList: [String!]!): String!
+  createEvent(createEventInput: CreateEventInput!): String!
+  deleteEvent(deleteEventInput: DeleteEventInput!): String!
+  updateEvent(updateEventInput: UpdateEventInput!): String!
+  updateOrCreateHoliday(year: Float!): String!
+  adminCreateOrUpdateEventByUser(createEventInput: CreateEventInput!): String!
+  setRttEmployerEvent(setRttInput: SetRttInput!): String!
+  createEventAdmin(createEventInput: CreateEventInput!): String!
+  updateEventAdmin(updateEventInput: UpdateEventInput!): String!
+  deleteEventAdmin(deleteEventInput: DeleteEventInput!): String!
+  updateAdminConfiguration(updateAdminConfigurationInput: UpdateAdminConfigurationInput!): AdminConfiguration!
+  updateWorkType(updateWorkTypeInput: UpdateWorkTypeInput!): WorkType!
+  createWorkType(createWorkTypeInput: CreateWorkTypeInput!): WorkType!
+  deleteWorkType(id: String!): String!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  trigramme: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  id: String!
+  firstName: String
+  lastName: String
+  trigramme: String
+  email: String
+  password: String
+  active: Boolean
+  workTypeId: String
+}
+
+input CreateEventInput {
+  titleAm: String!
+  titlePm: String!
+  hourlyAm: String!
+  hourlyPm: String!
+  workTime: String!
+  userId: String!
+  parking: Boolean!
+  date: [String!]!
+}
+
+input DeleteEventInput {
+  id: String!
+  userId: String!
+}
+
+input UpdateEventInput {
+  id: String!
+  userId: String!
+  date: String
+  hourlyAm: String
+  hourlyPm: String
+  titleAm: String
+  titlePm: String
+  parking: Boolean
+  workTime: String
+}
+
+input SetRttInput {
+  titleAm: String!
+  usersId: [String!]!
+  date: [String!]!
+}
+
+input UpdateAdminConfigurationInput {
+  value: String!
+  paramsName: String!
+}
+
+input UpdateWorkTypeInput {
+  id: String!
+  name: String
+  monday: String
+  tuesday: String
+  wednesday: String
+  thursday: String
+  friday: String
+  weeklyHour: String
+}
+
+input CreateWorkTypeInput {
+  name: String!
+  monday: String!
+  tuesday: String!
+  wednesday: String!
+  thursday: String!
+  friday: String!
+  weeklyHour: String!
+}

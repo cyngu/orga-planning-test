@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "WorkType" ADD COLUMN     "friday" TEXT NOT NULL DEFAULT '7',
+ADD COLUMN     "monday" TEXT NOT NULL DEFAULT '7',
+ADD COLUMN     "thursday" TEXT NOT NULL DEFAULT '7',
+ADD COLUMN     "tuesday" TEXT NOT NULL DEFAULT '7',
+ADD COLUMN     "wednesday" TEXT NOT NULL DEFAULT '7';

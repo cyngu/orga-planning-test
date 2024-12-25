@@ -1,0 +1,78 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String                @id @default(uuid())
+  email               String                @unique
+  firstName           String
+  lastName            String
+  trigramme           String                @unique
+  password            String
+  workTypeId          String?
+  workType            WorkType?             @relation(fields: [workTypeId], references: [id])
+  active              Boolean               @default(false)
+  UserRoles           UserRole[]
+  EventCalendar       EventCalendar[]
+}
+
+model WorkType {
+  id         String @id @default(uuid())
+  name       String
+  weeklyHour String @default("0")
+  monday     String @default("0")
+  tuesday    String @default("0")
+  wednesday  String @default("0")
+  thursday   String @default("0")
+  friday     String @default("0")
+  User       User[]
+}
+
+model Role {
+  roleId    String     @id @default(uuid())
+  roleName  String
+  UserRoles UserRole[]
+}
+
+model UserRole {
+  userId String
+  roleId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [roleId], onDelete: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model EventCalendar {
+  id       String   @id @default(uuid())
+  titleAm  String
+  titlePm  String
+  parking  Boolean  @default(false)
+  hourlyAm String
+  hourlyPm String
+  workTime String
+  start    DateTime
+  end      DateTime
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  @@index([userId])
+}
+
+model AdminConfiguration {
+  id          String @id @default(uuid())
+  name        String
+  value       String
+  description String
+}
