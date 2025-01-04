@@ -18,4 +18,4 @@ RUN yarn build
 EXPOSE 3001
 
 # Commande pour lancer l'app
-CMD ["yarn", "start"]
+CMD ["yarn", "start:prod"]
