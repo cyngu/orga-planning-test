@@ -14,10 +14,12 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
-    env_file:
-      - path: ./front/.env.local
+    command: npm run start
     ports:
       - "3000:3000"
+    env_file:
+      - path: ./front/.env
+        required: false
     labels:
-      com.orga-planning.service: "Nest Frontend"
-      com.orga-planning.description: "Front using framework Nuxt"
+      com.orga-planning.service: "Next Frontend"
+      com.orga-planning.description: "Front using framework Next"

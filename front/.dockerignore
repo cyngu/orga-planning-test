@@ -1,3 +1,5 @@
 node_modules
 .vscode
 internal-presence-state-front
+.env
+.git
