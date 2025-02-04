@@ -8,6 +8,8 @@ import { decodeToken, isConnectedVerify } from '~/lib/utils/decodeToken';
 import LogoIsb from '../../../public/logo/logo-isb.svg';
 import NavBar from './navBar.component';
 import { useAuthenticationStore } from '../authentication/_store/authentication.store';
+import OrgaPLanningLogo from '../../../public/OrgaPlanningLogo.png'
+import Image from 'next/image';
 
 const HeaderBar = () => {
     const router = useRouter();
@@ -46,8 +48,8 @@ const HeaderBar = () => {
             <div className="md:fixed md:top-0">
                 <div className="relative flex items-center bg-gradient-to-r from-primary to-primary-dark text-white pl-[4%] h-14 w-screen shadow-lg shadow-slate-400">
                     <div className="flex justify-center items-center gap-9 relative h-full py-2">
-                        <button>
-                            <LogoIsb onClick={() => router.push('/')} />
+                        <button onClick={() => router.push('/')}>
+                            <h1 className='text-xl font-bold'> Orga&apos;Planning</h1>
                         </button>
 
                         <div className="border-r border-white h-full"></div>

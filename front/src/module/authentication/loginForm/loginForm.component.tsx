@@ -121,7 +121,7 @@ const LoginForm: React.FC = () => {
                     )}
                 </button>
                 <button
-                    className={`hidden px-4 py-3 bg-gradient-to-b from-primary to-primary-dark hover:bg-gradient-to-t transition duration-150 ease-in-out active:scale-95 rounded-lg ${loading && "bg-gray-500 hover:bg-gray-500 active:scale-100 cursor-not-allowed"}  cursor-pointer md:w-[150px] md:order-1`}
+                    className={`px-4 py-3 bg-gradient-to-b from-primary to-primary-dark hover:bg-gradient-to-t transition duration-150 ease-in-out active:scale-95 rounded-lg ${loading && "bg-gray-500 hover:bg-gray-500 active:scale-100 cursor-not-allowed"}  cursor-pointer md:w-[150px] md:order-1`}
                     disabled={loading}
                     onClick={(event) => handleInscription(event)}
                 >
