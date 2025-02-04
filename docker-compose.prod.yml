@@ -1,0 +1,21 @@
+services:
+  backend:
+    image: ncyril/orga-planning-backend:1.0
+    env_file:
+      - path: ./back/.env
+    ports:
+      - "3001:3001"
+    labels:
+      com.orga-planning.service: "Nest Backend"
+      com.orga-planning.description: "Backend using framework Nest"
+  frontend:
+    image: ncyril/orga-planning-frontend:1.1
+    command: npm run start
+    ports:
+      - "3000:3000"
+    env_file:
+      - path: ./front/.env
+        required: false
+    labels:
+      com.orga-planning.service: "Next Frontend"
+      com.orga-planning.description: "Front using framework Next"
