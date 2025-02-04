@@ -1,15 +1,17 @@
 'use client';
+import { useRouter } from 'next/navigation';
 import { useAuthenticationStore } from './_store/authentication.store';
 import LoginForm from './loginForm/loginForm.component';
 import { Divider } from 'antd';
 import { GrGoogle } from 'react-icons/gr';
 
 const Authentication = () => {
+    const router = useRouter()
     const {loginSSOGoogle, loginSSOMicrosoft} = useAuthenticationStore()
     return (
         <>
             <div className="flex flex-col justify-center items-center gap-3 md:w-[550px] w-[80%] relative bg-white shadow-xl py-10 px-14 ">
-                <h2 className="text-2xl font-semibold text-blue-950">Ma présence</h2>
+                <h2 className="text-2xl font-semibold text-blue-950">Orga&apos;Planning</h2>
                 <LoginForm />
                 <Divider style={{  borderColor: '#47b5b9' }}></Divider>
                 <div className='w-full flex-col gap-2 flex py-10'>
