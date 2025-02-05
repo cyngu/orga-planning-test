@@ -39,7 +39,6 @@ services:
       com.orga-planning.service: "Next Frontend"
       com.orga-planning.description: "Front using framework Next"
 
-
 volumes:
   postgres_data: # named volume tp persist postgres data
 
