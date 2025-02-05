@@ -1,4 +1,19 @@
 services:
+  db:
+    image: postgres:17.2-alpine
+    restart: unless-stopped # restart the container unless it is explicitly stopped
+    environment: # secrets are set in /run/secrets/ in the container and used for env variables
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+    ports:
+      - "5432:5432" # map host port 5432 to container port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # bind named volume to persist postgresql data 
+    secrets: # Reference the secrets used
+      - postgres_password  
+      - postgres_user
+      - postgres_db
   backend:
     image: ncyril/orga-planning-backend:1.0
     env_file:
@@ -9,7 +24,7 @@ services:
       com.orga-planning.service: "Nest Backend"
       com.orga-planning.description: "Backend using framework Nest"
   frontend:
-    image: ncyril/orga-planning-frontend:1.1
+    image: ncyril/orga-planning-frontend:1.2
     command: npm run start
     ports:
       - "3000:3000"
@@ -19,3 +34,15 @@ services:
     labels:
       com.orga-planning.service: "Next Frontend"
       com.orga-planning.description: "Front using framework Next"
+
+
+volumes:
+  postgres_data: # named volume tp persist postgres data
+
+secrets: # files containing credentials
+  postgres_password:
+    file: postgres_password.txt
+  postgres_user:
+    file: postgres_user.txt
+  postgres_db:
+    file: postgres_db.txt
