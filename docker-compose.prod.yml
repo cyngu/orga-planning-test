@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     secrets:
-      - postgres_password  
+      - postgres_password
       - postgres_user
       - postgres_db
   backend:
@@ -23,8 +23,11 @@ services:
     ports:
       - "3001:3001"
     labels:
-      com.orga-planning.service: "Nest Backend"
-      com.orga-planning.description: "Backend using framework Nest"
+      - "traefik.enable=true"
+      - "traefik.http.routers.backend.rule=Host(`api.planning.myplaylab.fr`)"
+      - "traefik.http.routers.backend.entrypoints=websecure"
+      - "traefik.http.services.backend.loadbalancer.server.port=3001"
+      - "traefik.http.routers.backend.tls.certresolver=myresolver"
   frontend:
     image: ncyril/orga-planning-frontend:latest
     command: npm run start
@@ -35,9 +38,9 @@ services:
         required: false
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`www.myplaylab.fr`)"
-      - "traefik.http.routers.whoami.entrypoints=websecure"
-      - "traefik.http.routers.whoami.tls.certresolver=myresolver"
+      - "traefik.http.routers.frontend.rule=Host(`planning.myplaylab.fr`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure"
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver"
   traefik:
     restart: unless-stopped
     image: traefik:v3.3
@@ -57,6 +60,10 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    labels:
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Origin=*"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Methods=GET,POST,OPTIONS"
+      - "traefik.http.middlewares.cors.headers.customresponseheaders.Access-Control-Allow-Headers=*"
 
 volumes:
   postgres_data:
