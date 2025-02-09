@@ -22,6 +22,11 @@ services:
       - path: ./back/.env
     ports:
       - "3001:3001"
+    labels:
+      - "traefik.http.routers.app2.rule=Host(`app2.traefik.me`)"
+      - "traefik.http.routers.app2-tls.tls.domains[0].main=app2.traefik.me"
+      - "traefik.http.routers.app2-tls.tls.domains[0].sans=app2-*.traefik.me"
+      - "traefik.http.routers.app2.tls=true"
   frontend:
     build:
       context: ./front
